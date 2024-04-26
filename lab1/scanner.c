@@ -132,7 +132,8 @@ Token* getToken(void) {
 				readChar();
 				return getToken();
 			}
-			if (strlen(str) > 10 || strcmp(str, INT_MAX) > 0 || atoi(str) < 0) {
+			char intMax[15];
+			if (strlen(str) > 10 || strcmp(str, itoa(INT_MAX, intMax, 10)) > 0 || atoi(str) < 0) {
 				error(ERR_NUMBERTOOLONG, lineNo, colNo);
 			}
 			str[strlen(str)] = currentChar;
@@ -288,6 +289,7 @@ Token* getToken(void) {
 		error(ERR_INVALIDSYMBOL, lineNo, colNo);
 		readChar();
 		return token;
+	}
 }
 
 /******************************************************************/
