@@ -5,6 +5,7 @@
  */
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <ctype.h>
 #include "token.h"
 
@@ -45,7 +46,8 @@ int keywordEq(char *kw, char *string) {
 TokenType checkKeyword(char *string) {
   int i;
   for (i = 0; i < KEYWORDS_COUNT; i++)
-    if (keywordEq(keywords[i].string, string)) 
+    if (keywordEq(keywords[i].string, string))
+      printf("%s\n", keywords[i].string); 
       return keywords[i].tokenType;
   return TK_NONE;
 }

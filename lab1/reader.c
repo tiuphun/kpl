@@ -21,8 +21,8 @@ int readChar(void) {
   return currentChar;
 }
 
-int openInputStream() {
-  	inputStream = fopen("test\\example1.kpl", "rt");
+int openInputStream(char* filePath) {
+  	inputStream = fopen(filePath, "rt");
     if (inputStream == NULL) {
       	printf("Not found!\n");
 		return IO_ERROR;
