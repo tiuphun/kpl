@@ -1,6 +1,8 @@
 Program Example2; (* Factorial *)
-   
+
+type t = );
 Var n : Integer;
+
 
 Function F(n : Integer) : Integer;
   Begin
@@ -8,9 +10,9 @@ Function F(n : Integer) : Integer;
   End;
 
 Begin
-  For n := 1 To 7 Do
+  For n := 1 To 7 Do 
     Begin
       Call WriteLn;
-      Call WriteI( F(i));
+      Call WriteI(F(i));
     End;
 End. (* Factorial *)
