@@ -38,7 +38,6 @@ Object* checkDeclaredIdent(char* name) {
     error(ERR_UNDECLARED_IDENT, currentToken->lineNo, currentToken->colNo);
 
   return obj;
-
 }
 
 Object* checkDeclaredConstant(char* name) {
@@ -85,8 +84,20 @@ Object* checkDeclaredLValueIdent(char* name) {
   Object *obj = lookupObject(name);
   if (obj == NULL)
     error(ERR_UNDECLARED_IDENT, currentToken->lineNo, currentToken->colNo);
-  if (obj->kind != OBJ_VARIABLE && obj->kind != OBJ_PARAMETER)
-    error(ERR_INVALID_LVALUE, currentToken->lineNo, currentToken->colNo);
+  switch (obj->kind)
+  {
+  case OBJ_VARIABLE:
+    break;
+  case OBJ_PARAMETER:
+    break;
+  case OBJ_FUNCTION:
+    if (obj != symtab->currentScope->owner)
+      error(ERR_INVALID_RETURN, currentToken->lineNo, currentToken->colNo);
+    break;
+  default:
+    error(ERR_INVALID_IDENT, currentToken->lineNo, currentToken->colNo);
+    break;
+  }
   return obj;  
 }
 

@@ -35,8 +35,10 @@ Type* makeCharType(void) {
 
 Type* makeArrayType(int arraySize, Type* elementType) {
   //TODO
-  Type* type = (Type*) malloc(sizeof(Type)*arraySize);
+  Type* type = (Type*) malloc(sizeof(Type));
   type->typeClass = TP_ARRAY;
+  type->arraySize = arraySize;
+  type->elementType = elementType;
   return type;
 }
 
@@ -131,11 +133,11 @@ Object* createConstantObject(char *name) {
 
 Object* createTypeObject(char *name) {
   //TODO
-  Object* type = (Object*) malloc(sizeof(Object));
-  strcpy(type->name, name);
-  type->kind = OBJ_TYPE;
-  type->typeAttrs = (TypeAttributes*) malloc(sizeof(TypeAttributes));
-  return type;
+  Object* obj = (Object*) malloc(sizeof(Object));
+  strcpy(obj->name, name);
+  obj->kind = OBJ_TYPE;
+  obj->typeAttrs = (TypeAttributes*) malloc(sizeof(TypeAttributes));
+  return obj;
 }
 
 Object* createVariableObject(char *name) {
@@ -159,24 +161,24 @@ Object* createFunctionObject(char *name) {
 
 Object* createProcedureObject(char *name) {
   //TODO
-  Object* procedure = (Object*) malloc(sizeof(Object));
-  strcpy(procedure->name, name);
-  procedure->kind = OBJ_PROCEDURE;
-  procedure->procAttrs = (ProcedureAttributes*) malloc(sizeof(ProcedureAttributes));
-  procedure->procAttrs->paramList = NULL;
-  procedure->procAttrs->scope = createScope(procedure, symtab->currentScope);
-  return procedure;
+  Object* obj = (Object*) malloc(sizeof(Object));
+  strcpy(obj->name, name);
+  obj->kind = OBJ_PROCEDURE;
+  obj->procAttrs = (ProcedureAttributes*) malloc(sizeof(ProcedureAttributes));
+  obj->procAttrs->paramList = NULL;
+  obj->procAttrs->scope = createScope(obj, symtab->currentScope);
+  return obj;
 }
 
 Object* createParameterObject(char *name, enum ParamKind kind, Object* owner) {
   //TODO
-  Object* param = (Object*) malloc(sizeof(Object));
-  strcpy(param->name, name);
-  param->kind = OBJ_PARAMETER;
-  param->paramAttrs = (ParameterAttributes*) malloc(sizeof(ParameterAttributes));
-  param->paramAttrs->kind = kind;
-  param->paramAttrs->function = owner;
-  return param;
+  Object* obj = (Object*) malloc(sizeof(Object));
+  strcpy(obj->name, name);
+  obj->kind = OBJ_PARAMETER;
+  obj->paramAttrs = (ParameterAttributes*) malloc(sizeof(ParameterAttributes));
+  obj->paramAttrs->kind = kind;
+  obj->paramAttrs->function = owner;
+  return obj;
 }
 
 void freeObject(Object* obj) {
