@@ -488,11 +488,25 @@ void compileForSt(void) {
 void compileArgument(Object* param) {
   // TODO: parse an argument, and check type consistency
   //       If the corresponding parameter is a reference, the argument must be a lvalue
-  compileExpression();
+  Type* type;
+  if (param->paramAttrs->kind == PARAM_VALUE) {
+    type = compileExpression();
+    checkTypeEquality(type, param->paramAttrs->type);
+  } else {
+    type = compileLValue(); // if not a param, must be sth with address (aka. lvalue)
+    checkTypeEquality(type, param->paramAttrs->type);
+  }
 }
 
 void compileArguments(ObjectNode* paramList) {
   //TODO: parse a list of arguments, check the consistency of the arguments and the given parameters
+  /*
+    Cases of error:
+    1. When parameter list is NULL (no param) -> SB_LPAR met = error
+    2. When argument list is NULL -> Check parameter list, if not null = error
+    3. Both not null, but one is longer than the other -> error
+  */
+  ObjectNode* paramNode = paramList; // must add the paramlist here
   switch (lookAhead->tokenType) {
   case SB_LPAR:
     eat(SB_LPAR);
@@ -525,6 +539,7 @@ void compileArguments(ObjectNode* paramList) {
   case KW_END:
   case KW_ELSE:
   case KW_THEN:
+  // added some code here! (Case 2) if the param list is not null -> error
     break;
   default:
     error(ERR_INVALID_ARGUMENTS, lookAhead->lineNo, lookAhead->colNo);
