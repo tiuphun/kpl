@@ -116,7 +116,7 @@ Token* getToken(void)
 		readChar();
 		}
 	if (count > MAX_IDENT_LEN) 
-		{error(ERR_IDENTTOOLONG, ln,cn);
+		{error(ERR_IDENT_TOO_LONG, ln,cn);
     	return makeToken(TK_NONE, ln, cn);
   		}
   	str[count] = '\0';
@@ -152,7 +152,7 @@ Token* getToken(void)
         idx++;
         readChar();
       }
-      error(ERR_NUMBERTOOLONG, ln, cn);
+      error(ERR_NUMBER_TOO_LONG, ln, cn);
       return token;
       break;
     }
@@ -174,7 +174,7 @@ Token* getToken(void)
   	sprintf(strNumber, "%d", INT_MAX);
   	if (strlen(string) == strlen(strNumber) && strcmp(string, strNumber) > 0)
   	{
-    	error(ERR_NUMBERTOOLONG, ln, cn);
+    	error(ERR_NUMBER_TOO_LONG, ln, cn);
     	return token;
   	}
   	token->tokenType = TK_NUMBER;
@@ -229,7 +229,7 @@ Token* getToken(void)
     return makeToken(SB_NEQ, lineNo, colNo-1);
   case 22:
     token = makeToken(TK_NONE, lineNo, colNo-1);
-    error(ERR_INVALIDSYMBOL, token->lineNo, token->colNo);
+    error(ERR_INVALID_SYMBOL, token->lineNo, token->colNo);
     return token;
   case 23:
 	readChar();
@@ -286,7 +286,7 @@ Token* getToken(void)
   	readChar();
   	return token;
   case 34:
-  	error(ERR_INVALIDCHARCONSTANT, lineNo, colNo-2);
+  	error(ERR_INVALID_CONSTANT_CHAR, lineNo, colNo-2);
   case 35:
   	ln = lineNo;
     cn = colNo;
@@ -335,14 +335,14 @@ Token* getToken(void)
 	readChar(); 
   	return getToken();
   case 40:
-    error(ERR_ENDOFCOMMENT, lineNo, colNo);
+    error(ERR_END_OF_COMMENT, lineNo, colNo);
   case 41:return makeToken(SB_LPAR, ln, cn);
   case 42:
     readChar();
     return makeToken(SB_RPAR, lineNo, colNo);
  case 43:
     token = makeToken(TK_NONE, lineNo, colNo);
-    error(ERR_INVALIDSYMBOL, lineNo, colNo);
+    error(ERR_INVALID_SYMBOL, lineNo, colNo);
     readChar();
     return token;
 }

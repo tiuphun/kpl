@@ -12,3 +12,5 @@ To compile, run the following commands under the respective folder:
 * Parser: `gcc -o main main.c parser.c charcode.c error.c reader.c scanner.c token.c`
 
 * Scope: `gcc -o main main.c parser.c charcode.c error.c reader.c scanner.c token.c semantics.c symtab.c debug.c`
+
+* Type Checking: `gcc -o main main.c parser.c charcode.c error.c reader.c scanner.c token.c semantics.c symtab.c debug.c`
